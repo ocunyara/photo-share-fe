@@ -1,26 +1,28 @@
 import React from 'react'
-import { Link, withRouter } from 'react-router-dom'
-import { compose } from 'redux'
+import { Link } from 'react-router-dom'
+
 import PropTypes from 'prop-types'
 
-import { API } from 'utils/api/api'
-import { AuthManagerInstance } from 'utils/auth/AuthManager'
 import { FormWrapper } from 'components/LoginLayout/FormWrapper'
 import { Button } from 'components/Button/Button'
 import { Input } from 'components/Input/Input'
+import firebase from 'components/Firebase/firebase'
 
 import styles from './RegisterPage.module.scss'
 
-export class RegisterPageView extends React.Component {
+const INITIAL_STATE = {
+  fullName: '',
+  userName: '',
+  email: '',
+  password: '',
+  error: null,
+}
+
+export class RegisterPage extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      fullName: '',
-      userName: '',
-      email: '',
-      password: '',
-    }
+    this.state = { ...INITIAL_STATE }
   }
 
   handleChange = fildName => value => {
@@ -29,15 +31,27 @@ export class RegisterPageView extends React.Component {
     })
   }
 
-  handleSign = async () => {
-    try {
-      await API.post('/signup', this.state)
-      await AuthManagerInstance.login({ email: this.state.email, password: this.state.password })
-      this.props.history.push('/')
-    } catch (err) {
-      // eslint-disable-next-line
-      console.log('Failed to create account') // todo: add toast message.
-    }
+  handleSign = () => {
+    const { email, password } = this.state
+
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        const user = firebase.auth().currentUser
+
+        user
+          .updateProfile({ displayName: password })
+          .then(() => {
+            this.props.history.push('/')
+          })
+          .catch(error => {
+            this.setState({ error })
+          })
+      })
+      .catch(error => {
+        this.setState({ error })
+      })
   }
 
   render() {
@@ -76,10 +90,10 @@ export class RegisterPageView extends React.Component {
   }
 }
 
-RegisterPageView.propTypes = {
+RegisterPage.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
 }
 
-export const RegisterPage = compose(withRouter)(RegisterPageView)
+export default RegisterPage

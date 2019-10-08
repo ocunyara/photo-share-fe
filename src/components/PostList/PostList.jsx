@@ -41,5 +41,5 @@ export const PostList = ({ postList = mockPostList }) => (
 )
 
 PostList.propTypes = {
-  postList: PropTypes.array.isRequired,
+  postList: PropTypes.array,
 }

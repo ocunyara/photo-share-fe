@@ -3,19 +3,18 @@ import PropTypes from 'prop-types'
 import { Link, withRouter } from 'react-router-dom'
 import { compose } from 'redux'
 
-import { AuthManagerInstance } from 'utils/auth/AuthManager'
+// import { AuthManagerInstance } from 'utils/auth/AuthManager'
 import { FormWrapper } from 'components/LoginLayout/FormWrapper'
 import { Button } from 'components/Button/Button'
 import { Input } from 'components/Input/Input'
 
 import styles from './LoginPage.module.scss'
 
-const LoginPageView = ({ history }) => {
+const LoginPageView = () => {
   const [form, setValues] = useState({
     email: '',
     password: '',
   })
-  const [isPending, setIsPending] = useState(false)
 
   const handleChange = fieldName => value => {
     setValues({
@@ -24,13 +23,7 @@ const LoginPageView = ({ history }) => {
     })
   }
 
-  const handleLogin = () => {
-    setIsPending(true)
-
-    AuthManagerInstance.login(form)
-      .then(() => history.replace('/'))
-      .catch(() => setIsPending(false))
-  }
+  const handleLogin = () => {}
 
   return (
     <FormWrapper>
@@ -48,9 +41,7 @@ const LoginPageView = ({ history }) => {
           name="password"
           type="password"
         />
-        <Button handleClick={handleLogin} isLoading={isPending}>
-          Log in
-        </Button>
+        <Button handleClick={handleLogin}>Log in</Button>
         <div className={styles.separator}>
           <p>or</p>
         </div>
