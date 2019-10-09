@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import { Link, withRouter } from 'react-router-dom'
 import { compose } from 'redux'
 
-// import { AuthManagerInstance } from 'utils/auth/AuthManager'
 import { FormWrapper } from 'components/LoginLayout/FormWrapper'
 import { Button } from 'components/Button/Button'
 import { Input } from 'components/Input/Input'
+import firebase from 'components/Firebase/firebase'
 
 import styles from './LoginPage.module.scss'
 
@@ -23,7 +23,21 @@ const LoginPageView = () => {
     })
   }
 
-  const handleLogin = () => {}
+  const handleLogin = () => {
+    console.log(form)
+    const { email, password } = form
+
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(user => {
+        this.props.history.push('/')
+      })
+      .catch(error => {
+        // eslint-disable-next-line no-console
+        console.log('Error')
+      })
+  }
 
   return (
     <FormWrapper>

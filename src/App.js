@@ -6,9 +6,16 @@ import { RegisterPage } from 'pages/RegisterPage/RegisterPage'
 import { LoginPage } from 'pages/LoginPage/LoginPage'
 import { ResetPage } from 'pages/ResetPage/ResetPage'
 import { NotFound } from 'pages/404Page/NotFound'
+import { auth } from 'components/Firebase/firebase'
 
 import './App.module.scss'
 import './styles/app.general.scss'
+
+// const renderUserRoutes = () => (
+//   <Switch>
+//     <Route path="/" component={HomePage} exact />
+//   </Switch>
+// )
 
 const renderGuestRoutes = () => (
   <Switch>
@@ -24,11 +31,15 @@ const renderGuestRoutes = () => (
 export class App extends Component {
   constructor(props) {
     super(props)
+    this.state = { user: null }
+  }
 
-    this.state = {
-      isLoading: true,
-      isAuthenticated: false,
-    }
+  componentDidMount() {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        this.setState({ user })
+      }
+    })
   }
 
   render() {
