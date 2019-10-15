@@ -1,4 +1,6 @@
-import firebase from 'firebase'
+import app from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/firebase-firestore'
 
 const config = {
   apiKey: 'AIzaSyAWLSSVZ5seBepk80IfGJ_EoiShCryffPY',
@@ -10,9 +12,53 @@ const config = {
   appId: '1:1031216888711:web:001359bfe539c35b',
 }
 
-firebase.initializeApp(config)
+class Firebase {
+  constructor() {
+    app.initializeApp(config)
+    this.auth = app.auth()
+    this.db = app.firestore()
+  }
 
-export const provider = new firebase.auth.GoogleAuthProvider()
-export const auth = firebase.auth()
+  login(email, password) {
+    return this.auth.signInWithEmailAndPassword(email, password)
+  }
 
-export default firebase
+  logout() {
+    return this.auth.signOut()
+  }
+
+  async register(name, email, password) {
+    await this.auth.createUserWithEmailAndPassword(email, password)
+
+    return this.auth.currentUser.updateProfile({
+      displayName: name,
+    })
+  }
+
+  // addQuote(firstName) {
+  //   if(!this.auth.currentUser) {
+  //     return alert('Not authorized')
+  //   }
+  //
+  //   return this.db.doc(`users_codedamn_video/${this.auth.currentUser.uid}`).set({
+  //     firstName
+  //   })
+  // }
+
+  isInitialized() {
+    return new Promise(resolve => {
+      this.auth.onAuthStateChanged(resolve)
+    })
+  }
+
+  getCurrentUsername() {
+    return this.auth.currentUser && this.auth.currentUser.displayName
+  }
+
+  async getCurrentUserQuote() {
+    const firstName = await this.db.doc(`users_codedamn_video/${this.auth.currentUser.uid}`).get()
+    // return firstName.get('quote')
+  }
+}
+
+export default new Firebase()

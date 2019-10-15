@@ -10,7 +10,7 @@ import firebase from 'components/Firebase/firebase'
 
 import styles from './LoginPage.module.scss'
 
-const LoginPageView = () => {
+const LoginPageView = props => {
   const [form, setValues] = useState({
     email: '',
     password: '',
@@ -24,19 +24,18 @@ const LoginPageView = () => {
   }
 
   const handleLogin = () => {
-    console.log(form)
-    const { email, password } = form
+    const [email, password] = form
 
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(user => {
-        this.props.history.push('/')
-      })
-      .catch(error => {
-        // eslint-disable-next-line no-console
-        console.log('Error')
-      })
+    async function login() {
+      try {
+        await firebase.login(email, password)
+        props.history.replace('/dashboard')
+      } catch (error) {
+        alert(error.message)
+      }
+    }
+
+    login()
   }
 
   return (

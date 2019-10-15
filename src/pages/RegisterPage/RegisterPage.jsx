@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
 import PropTypes from 'prop-types'
 
@@ -11,11 +11,10 @@ import firebase from 'components/Firebase/firebase'
 import styles from './RegisterPage.module.scss'
 
 const INITIAL_STATE = {
-  fullName: '',
-  userName: '',
+  name: '',
   email: '',
   password: '',
-  error: null,
+  fullName: '',
 }
 
 export class RegisterPage extends React.Component {
@@ -32,26 +31,17 @@ export class RegisterPage extends React.Component {
   }
 
   handleSign = () => {
-    const { email, password } = this.state
+    const { name, email, password } = this.state
 
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        const user = firebase.auth().currentUser
+    async function onRegister() {
+      try {
+        await firebase.register(name, email, password)
+      } catch (error) {
+        alert(error.message)
+      }
+    }
 
-        user
-          .updateProfile({ displayName: password })
-          .then(() => {
-            this.props.history.push('/')
-          })
-          .catch(error => {
-            this.setState({ error })
-          })
-      })
-      .catch(error => {
-        this.setState({ error })
-      })
+    onRegister()
   }
 
   render() {
@@ -65,12 +55,7 @@ export class RegisterPage extends React.Component {
             name="fullName"
           />
           <Input value={this.state.email} placeholder="Email" handleChange={this.handleChange('email')} name="email" />
-          <Input
-            value={this.state.userName}
-            placeholder="Username"
-            handleChange={this.handleChange('userName')}
-            name="username"
-          />
+          <Input value={this.state.name} placeholder="name" handleChange={this.handleChange('name')} name="name" />
           <Input
             value={this.state.password}
             placeholder="Password"
@@ -96,4 +81,4 @@ RegisterPage.propTypes = {
   }).isRequired,
 }
 
-export default RegisterPage
+export default withRouter(RegisterPage)
