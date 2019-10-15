@@ -30,18 +30,15 @@ export class RegisterPage extends React.Component {
     })
   }
 
-  handleSign = () => {
+  handleSign = async () => {
     const { name, email, password } = this.state
 
-    async function onRegister() {
-      try {
-        await firebase.register(name, email, password)
-      } catch (error) {
-        alert(error.message)
-      }
+    try {
+      await firebase.register(name, email, password)
+      this.props.history.push('/dashboard')
+    } catch (error) {
+      alert(error.message)
     }
-
-    onRegister()
   }
 
   render() {
