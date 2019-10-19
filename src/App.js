@@ -13,6 +13,15 @@ import firebase from 'components/Firebase/firebase'
 import './App.module.scss'
 import './styles/app.general.scss'
 
+const isAuthenticated = () => (
+  <Switch>
+    <Route path="/" component={HomePage} exact />
+    <Route path="/dashboard" component={Dashboard} />
+    <Route path="/404" component={NotFound} />
+    <Redirect from="*" to="/404" />
+  </Switch>
+)
+
 const renderGuestRoutes = () => (
   <Switch>
     <Route path="/" component={HomePage} exact />
@@ -38,7 +47,8 @@ export default function App() {
     <Fragment>
       <CssBaseline />
       <BrowserRouter>
-        <Switch>{renderGuestRoutes()}</Switch>
+        {!firebase.getCurrentUsername() && renderGuestRoutes()}
+        {firebase.getCurrentUsername() && isAuthenticated()}
       </BrowserRouter>
     </Fragment>
   ) : (
