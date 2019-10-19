@@ -36,7 +36,6 @@ export class LoginPageView extends React.Component {
     } catch (error) {
       alert(error.message)
     }
-    console.log(12)
   }
 
   render() {

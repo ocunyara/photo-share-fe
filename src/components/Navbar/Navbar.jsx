@@ -1,14 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-// import { AuthManagerInstance } from 'utils/auth/AuthManager'
+import firebase from 'components/Firebase/firebase'
 
 import styles from './Navbar.module.scss'
 
 const renderGuestLinks = () => (
   <ul>
     <li>
-      <Link to="/login" className={styles.login}>
+      <Link to="/login" className={styles.line}>
         Login
       </Link>
     </li>
@@ -18,21 +18,25 @@ const renderGuestLinks = () => (
   </ul>
 )
 
-// const renderUserLinks = () => (
-//   <ul>
-//     <li>
-//       {/*<Link to="/" onClick={() => logout()}>*/}
-//       {/*  Logout*/}
-//       {/*</Link>*/}
-//     </li>
-//     <li>
-//       <Link to="/account">Account</Link>
-//     </li>
-//   </ul>
-// )
+const renderUserLinks = () => (
+  <ul>
+    <li>
+      <Link to="/dashboard" className={styles.line}>
+        Dashboard
+      </Link>
+    </li>
+    <li>
+      <Link to="/" onClick={() => logout()}>
+        Logout
+      </Link>
+    </li>
+  </ul>
+)
+
+const logout = async () => {
+  await firebase.logout()
+}
 
 export const NavBar = () => (
-  // const isAuthenticated = AuthManagerInstance.authenticated
-  //
-  <nav className={styles.nav}>{renderGuestLinks()}</nav>
+  <nav className={styles.nav}>{firebase.getCurrentUsername() ? renderUserLinks() : renderGuestLinks()}</nav>
 )
