@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 
 import { HomePage } from 'pages/HomePage/HomePage'
 import { RegisterPage } from 'pages/RegisterPage/RegisterPage'
-import { LoginPage } from 'pages/LoginPage/LoginPage'
+import { LoginPageView } from 'pages/LoginPage/LoginPage'
 import { ResetPage } from 'pages/ResetPage/ResetPage'
 import { Dashboard } from 'pages/Dashboard/Dashboard'
 import { NotFound } from 'pages/404Page/NotFound'
@@ -17,7 +17,7 @@ const renderGuestRoutes = () => (
   <Switch>
     <Route path="/" component={HomePage} exact />
     <Route path="/register" component={RegisterPage} />
-    <Route path="/login" component={LoginPage} />
+    <Route path="/login" component={LoginPageView} />
     <Route path="/reset" component={ResetPage} />
     <Route path="/dashboard" component={Dashboard} />
     <Route path="/404" component={NotFound} />

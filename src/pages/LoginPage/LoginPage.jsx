@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { Link, withRouter } from 'react-router-dom'
-import { compose } from 'redux'
 
 import { FormWrapper } from 'components/LoginLayout/FormWrapper'
 import { Button } from 'components/Button/Button'
@@ -10,65 +9,69 @@ import firebase from 'components/Firebase/firebase'
 
 import styles from './LoginPage.module.scss'
 
-const LoginPageView = props => {
-  const [form, setValues] = useState({
-    email: '',
-    password: '',
-  })
+const INITIAL_STATE = {
+  email: '',
+  password: '',
+}
 
-  const handleChange = fieldName => value => {
-    setValues({
-      ...form,
-      [fieldName]: value,
+export class LoginPageView extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = { ...INITIAL_STATE }
+  }
+
+  handleChange = fildName => value => {
+    this.setState({
+      [fildName]: value,
     })
   }
 
-  const handleLogin = () => {
-    const [email, password] = form
+  handleLogin = async () => {
+    const { email, password } = this.state
 
-    async function login() {
-      try {
-        await firebase.login(email, password)
-        props.history.replace('/dashboard')
-      } catch (error) {
-        alert(error.message)
-      }
+    try {
+      await firebase.login(email, password)
+      this.props.history.push('/dashboard')
+    } catch (error) {
+      alert(error.message)
     }
-
-    login()
+    console.log(12)
   }
 
-  return (
-    <FormWrapper>
-      <div className={styles.form}>
-        <Input
-          value={form.email}
-          placeholder="Phone number, username, or email"
-          handleChange={handleChange('email')}
-          name="username"
-        />
-        <Input
-          value={form.password}
-          placeholder="Password"
-          handleChange={handleChange('password')}
-          name="password"
-          type="password"
-        />
-        <Button handleClick={handleLogin}>Log in</Button>
-        <div className={styles.separator}>
-          <p>or</p>
+  render() {
+    return (
+      <FormWrapper>
+        <div className={styles.form}>
+          <Input
+            value={this.state.email}
+            placeholder="Phone number, username, or email"
+            handleChange={this.handleChange('email')}
+            name="username"
+          />
+          <Input
+            value={this.state.password}
+            placeholder="Password"
+            handleChange={this.handleChange('password')}
+            name="password"
+            type="password"
+          />
+          <Button handleClick={this.handleLogin}>Log in</Button>
+          <div className={styles.separator}>
+            <p>or</p>
+          </div>
+          <Link className={styles.forgotPassword} to="/reset">
+            Forgot password?
+          </Link>
         </div>
-        <Link className={styles.forgotPassword} to="/reset">
-          Forgot password?
-        </Link>
-      </div>
-      <div className={styles.bottomField}>
-        <p>
-          Dont have an account? <Link to="/register">Sign up</Link>
-        </p>
-      </div>
-    </FormWrapper>
-  )
+        <div className={styles.bottomField}>
+          <p>
+            Dont have an account? <Link to="/register">Sign up</Link>
+          </p>
+        </div>
+      </FormWrapper>
+    )
+  }
 }
 
 LoginPageView.propTypes = {
@@ -77,4 +80,4 @@ LoginPageView.propTypes = {
   }).isRequired,
 }
 
-export const LoginPage = compose(withRouter)(LoginPageView)
+export default withRouter(LoginPageView)

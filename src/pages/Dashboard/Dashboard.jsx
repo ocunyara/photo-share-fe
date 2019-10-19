@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { Button } from '@material-ui/core'
+import React, { Fragment, useEffect, useState } from 'react'
+
+import { Button } from 'components/Button/Button'
 import firebase from 'components/Firebase/firebase'
+
+import { PageHeader } from 'components/PageHeader/PageHeader'
 
 export const Dashboard = props => {
   if (!firebase.getCurrentUsername()) {
@@ -18,12 +21,15 @@ export const Dashboard = props => {
   })
 
   return (
-    <main>
-      Hello {firebase.getCurrentUsername()}
-      <Button type="submit" fullWidth variant="contained" color="secondary" onClick={logout}>
-        Logout
-      </Button>
-    </main>
+    <Fragment>
+      <PageHeader></PageHeader>
+      <main>
+        Hello {firebase.getCurrentUsername()}
+        <Button type="submit" fullWidth variant="contained" color="secondary" handleClick={logout}>
+          Logout
+        </Button>
+      </main>
+    </Fragment>
   )
 
   async function logout() {
