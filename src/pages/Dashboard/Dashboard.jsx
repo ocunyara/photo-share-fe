@@ -1,8 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 
 import firebase from 'components/Firebase/firebase'
-import { Button } from 'components/Button/Button'
 import { PageHeader } from 'components/PageHeader/PageHeader'
 import MailOutlineIcon from '@material-ui/icons/MailOutline'
 
