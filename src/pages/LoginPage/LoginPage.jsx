@@ -34,6 +34,7 @@ export class LoginPageView extends React.Component {
       await firebase.login(email, password)
       this.props.history.push('/dashboard')
     } catch (error) {
+      // eslint-disable-next-line no-undef
       alert(error.message)
     }
   }

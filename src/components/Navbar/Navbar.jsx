@@ -39,8 +39,10 @@ export const NavBar = props => {
   async function logout() {
     try {
       await firebase.logout()
+      // eslint-disable-next-line react/prop-types
       props.history.push('/')
     } catch (e) {
+      // eslint-disable-next-line no-undef
       alert(e)
     }
   }
