@@ -31,12 +31,14 @@ export class RegisterPage extends React.Component {
   }
 
   handleSign = async () => {
-    const { name, email, password } = this.state
+    const { name, email, password, fullName } = this.state
 
     try {
       await firebase.register(name, email, password)
+      await firebase.addQuote(fullName)
       this.props.history.push('/dashboard')
     } catch (error) {
+      // eslint-disable-next-line no-undef
       alert(error.message)
     }
   }
@@ -46,7 +48,7 @@ export class RegisterPage extends React.Component {
       <FormWrapper>
         <div className={styles.form}>
           <Input
-            value={this.state.firstName}
+            value={this.state.fullName}
             placeholder="Full Name"
             handleChange={this.handleChange('fullName')}
             name="fullName"

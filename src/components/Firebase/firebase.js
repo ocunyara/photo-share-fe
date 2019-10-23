@@ -32,18 +32,20 @@ class Firebase {
 
     return this.auth.currentUser.updateProfile({
       displayName: name,
+      email: email,
     })
   }
 
-  // addQuote(firstName) {
-  //   if(!this.auth.currentUser) {
-  //     return alert('Not authorized')
-  //   }
-  //
-  //   return this.db.doc(`users_codedamn_video/${this.auth.currentUser.uid}`).set({
-  //     firstName
-  //   })
-  // }
+  addQuote(fullName) {
+    if (!this.auth.currentUser) {
+      // eslint-disable-next-line no-undef
+      return alert('Not authorized')
+    }
+
+    return this.db.doc(`users_codedamn_video/${this.auth.currentUser.uid}`).set({
+      fullName,
+    })
+  }
 
   isInitialized() {
     return new Promise(resolve => {
@@ -51,13 +53,17 @@ class Firebase {
     })
   }
 
-  getCurrentUsername() {
-    return this.auth.currentUser && this.auth.currentUser.displayName
+  getCurrentUser() {
+    return {
+      Name: this.auth.currentUser && this.auth.currentUser.displayName,
+      Email: this.auth.currentUser && this.auth.currentUser.email,
+    }
   }
 
-  async getCurrentUserQuote() {
-    const firstName = await this.db.doc(`users_codedamn_video/${this.auth.currentUser.uid}`).get()
-    // return firstName.get('quote')
+  async getCurrentFullName() {
+    const fullName = await this.db.doc(`users_codedamn_video/${this.auth.currentUser.uid}`).get()
+
+    return fullName.get('fullName')
   }
 }
 
