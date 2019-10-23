@@ -47,8 +47,8 @@ export default function App() {
     <Fragment>
       <CssBaseline />
       <BrowserRouter>
-        {!firebase.getCurrentUsername() && renderGuestRoutes()}
-        {firebase.getCurrentUsername() && isAuthenticated()}
+        {!firebase.getCurrentUser() && renderGuestRoutes()}
+        {firebase.getCurrentUser() && isAuthenticated()}
       </BrowserRouter>
     </Fragment>
   ) : (

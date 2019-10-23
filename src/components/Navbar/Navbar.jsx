@@ -34,7 +34,7 @@ export const NavBar = props => {
     </ul>
   )
 
-  return <nav className={styles.nav}>{firebase.getCurrentUsername() ? renderUserLinks() : renderGuestLinks()}</nav>
+  return <nav className={styles.nav}>{firebase.getCurrentUser() ? renderUserLinks() : renderGuestLinks()}</nav>
 
   async function logout() {
     try {

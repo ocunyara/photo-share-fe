@@ -32,6 +32,7 @@ class Firebase {
 
     return this.auth.currentUser.updateProfile({
       displayName: name,
+      email: email,
     })
   }
 
@@ -52,11 +53,14 @@ class Firebase {
     })
   }
 
-  getCurrentUsername() {
-    return this.auth.currentUser && this.auth.currentUser.displayName
+  getCurrentUser() {
+    return {
+      Name: this.auth.currentUser && this.auth.currentUser.displayName,
+      Email: this.auth.currentUser && this.auth.currentUser.email,
+    }
   }
 
-  async getCurrentUserQuote() {
+  async getCurrentFullName() {
     const fullName = await this.db.doc(`users_codedamn_video/${this.auth.currentUser.uid}`).get()
 
     return fullName.get('fullName')

@@ -8,7 +8,7 @@ import MailOutlineIcon from '@material-ui/icons/MailOutline'
 import styles from './Dashboard.module.scss'
 
 export const Dashboard = props => {
-  if (!firebase.getCurrentUsername()) {
+  if (!firebase.getCurrentUser()) {
     // eslint-disable-next-line no-undef
     alert('Please login first')
     // eslint-disable-next-line react/prop-types
@@ -20,7 +20,7 @@ export const Dashboard = props => {
   const [fullName, setFullName] = useState('')
 
   useEffect(() => {
-    firebase.getCurrentUserQuote().then(setFullName)
+    firebase.getCurrentFullName().then(setFullName)
   })
 
   return (
@@ -32,14 +32,14 @@ export const Dashboard = props => {
             <img src="https://via.placeholder.com/200" alt="Avatar" />
           </div>
           <div className={styles.card_name}>
-            <span className={styles.full_name}>{firebase.getCurrentUsername()}</span>
-            <span className={styles.name}>{fullName ? `${fullName}` : <VideogameAssetIcon size={20} />}</span>
+            <span className={styles.name}>{firebase.getCurrentUser().Name}</span>
+            <span className={styles.full_name}>{fullName ? `${fullName}` : <VideogameAssetIcon size={20} />}</span>
           </div>
           <div className={styles.profile_editable}>
             <button>Edit profile</button>
             <a href="mailto:" className={styles.email}>
               <MailOutlineIcon className={styles.email_icon} />
-              a@a.com
+              {firebase.getCurrentUser().Email}
             </a>
           </div>
         </div>
