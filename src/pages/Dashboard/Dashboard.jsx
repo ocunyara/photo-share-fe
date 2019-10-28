@@ -4,6 +4,7 @@ import VideogameAssetIcon from '@material-ui/icons/VideogameAsset'
 import firebase from 'components/Firebase/firebase'
 import { PageHeader } from 'components/PageHeader/PageHeader'
 import MailOutlineIcon from '@material-ui/icons/MailOutline'
+import { AvatarImage } from 'components/AvatarImage/AvatarImage'
 
 import styles from './Dashboard.module.scss'
 
@@ -23,13 +24,16 @@ export const Dashboard = props => {
     firebase.getCurrentFullName().then(setFullName)
   })
 
+  firebase.consoleUser()
+
   return (
     <Fragment>
       <PageHeader></PageHeader>
       <div className={styles.container}>
         <div className={styles.user_profile}>
           <div className={styles.avatar}>
-            <img src="https://via.placeholder.com/200" alt="Avatar" />
+            <img alt="Avatar" />
+            <AvatarImage />
           </div>
           <div className={styles.card_name}>
             <span className={styles.name}>{firebase.getCurrentUser().Name}</span>
