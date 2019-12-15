@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { Route, Switch, Redirect, BrowserRouter } from 'react-router-dom'
 
-import { HomePage } from 'pages/HomePage/HomePage'
+import HomePage from 'pages/HomePage/HomePage'
 import { RegisterPage } from 'pages/RegisterPage/RegisterPage'
 import { LoginPageView } from 'pages/LoginPage/LoginPage'
 import { ResetPage } from 'pages/ResetPage/ResetPage'
@@ -21,25 +21,23 @@ const isAuthenticated = () => (
   </Switch>
 )
 
-// const renderGuestRoutes = () => (
-//
-// )
+const renderGuestRoutes = () => (
+  <Switch>
+    <Route path="/" component={HomePage} exact />
+    <Route path="/register" component={RegisterPage} />
+    <Route path="/login" component={LoginPageView} />
+    <Route path="/reset" component={ResetPage} />
+    <Route path="/dashboard" component={Dashboard} />
+    <Route path="/404" component={NotFound} />
+    <Redirect from="*" to="/404" />
+  </Switch>
+)
 
 export default function App() {
   return (
     <Fragment>
       <CssBaseline />
-      <BrowserRouter>
-        <Switch>
-          <Route path="/" component={HomePage} exact />
-          <Route path="/register" component={RegisterPage} />
-          <Route path="/login" component={LoginPageView} />
-          <Route path="/reset" component={ResetPage} />
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/404" component={NotFound} />
-          <Redirect from="*" to="/404" />
-        </Switch>
-      </BrowserRouter>
+      <BrowserRouter>{renderGuestRoutes()}</BrowserRouter>
     </Fragment>
   )
 }
