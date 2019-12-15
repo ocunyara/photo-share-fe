@@ -5,7 +5,6 @@ import { Link, withRouter } from 'react-router-dom'
 import { FormWrapper } from 'components/LoginLayout/FormWrapper'
 import { Button } from 'components/Button/Button'
 import { Input } from 'components/Input/Input'
-import firebase from 'components/Firebase/firebase'
 
 import styles from './LoginPage.module.scss'
 
@@ -27,17 +26,7 @@ export class LoginPageView extends React.Component {
     })
   }
 
-  handleLogin = async () => {
-    const { email, password } = this.state
-
-    try {
-      await firebase.login(email, password)
-      this.props.history.push('/dashboard')
-    } catch (error) {
-      // eslint-disable-next-line no-undef
-      alert(error.message)
-    }
-  }
+  handleLogin = async () => {}
 
   render() {
     return (
