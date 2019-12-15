@@ -1,8 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import firebase from 'components/Firebase/firebase'
-
 import styles from './Navbar.module.scss'
 
 export const NavBar = props => {
@@ -27,23 +25,10 @@ export const NavBar = props => {
         </Link>
       </li>
       <li>
-        <Link to="/" onClick={() => logout()}>
-          Logout
-        </Link>
+        <Link to="/">Logout</Link>
       </li>
     </ul>
   )
 
-  return <nav className={styles.nav}>{firebase.getCurrentUser() ? renderUserLinks() : renderGuestLinks()}</nav>
-
-  async function logout() {
-    try {
-      await firebase.logout()
-      // eslint-disable-next-line react/prop-types
-      props.history.push('/')
-    } catch (e) {
-      // eslint-disable-next-line no-undef
-      alert(e)
-    }
-  }
+  return <nav className={styles.nav}>{renderGuestLinks()}</nav>
 }
