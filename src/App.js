@@ -28,6 +28,7 @@ const renderGuestRoutes = () => (
     <Route path="/login" component={LoginPageView} />
     <Route path="/reset" component={ResetPage} />
     <Route path="/dashboard" component={Dashboard} />
+    <Route path="/users/" />
     <Route path="/404" component={NotFound} />
     <Redirect from="*" to="/404" />
   </Switch>
