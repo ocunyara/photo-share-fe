@@ -1,6 +1,6 @@
 import React, { Fragment, Component } from 'react'
 
-import PostList from 'components/PostList/PostList'
+import { PostList } from 'components/PostList/PostList'
 import { PageSidebar } from 'components/PageSidebar/PageSidebar'
 import { PageHeader } from 'components/PageHeader/PageHeader'
 

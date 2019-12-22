@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import { Post } from 'components/Post/Post'
 
-class PostList extends Component {
+export class PostList extends Component {
   state = {
     screams: null,
   }
@@ -12,7 +12,6 @@ class PostList extends Component {
     axios
       .get('screams/')
       .then(res => {
-        console.log(res.data)
         this.setState({
           screams: res.data,
         })
@@ -34,5 +33,3 @@ class PostList extends Component {
     )
   }
 }
-
-export default PostList
