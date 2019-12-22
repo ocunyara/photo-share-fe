@@ -4,49 +4,7 @@ import axios from 'axios'
 
 import { Post } from 'components/Post/Post'
 
-//
-// const mockPostList = [
-//   {
-//     id: 1,
-//     user: {
-//       id: 1,
-//       userPictureSmall: 'https://via.placeholder.com/30',
-//       userName: 'maxim.maruhnyak',
-//     },
-//     location: {
-//       id: '1',
-//       title: 'Location title',
-//       link: 'https://googole.com',
-//     },
-//   },
-//   {
-//     id: 2,
-//     user: {
-//       id: 1,
-//       userPictureSmall: 'https://via.placeholder.com/30',
-//       userName: 'maxim.maruhnyak',
-//     },
-//     location: {
-//       id: 1,
-//       title: 'Location title',
-//       link: 'https://googole.com',
-//     },
-//   },
-// ]
-//
-// export const PostList = ({ postList = mockPostList }) => (
-//   <div>
-//     {postList.map(post => (
-//       <Post key={post.id} {...post} />
-//     ))}
-//   </div>
-// )
-//
-// PostList.propTypes = {
-//   postList: PropTypes.array,
-// }
-
-class PostList extends Component {
+export class PostList extends Component {
   state = {
     screams: null,
   }
@@ -64,8 +22,14 @@ class PostList extends Component {
   }
 
   render() {
-    return <div>{this.state.screams ? this.state.screams.map(scream => <Post {...scream} />) : <p>Loading ...</p>}</div>
+    return (
+      <div>
+        {this.state.screams ? (
+          this.state.screams.map(scream => <Post key={scream.screamId} {...scream} />)
+        ) : (
+          <p>Loading ...</p>
+        )}
+      </div>
+    )
   }
 }
-
-export default PostList
