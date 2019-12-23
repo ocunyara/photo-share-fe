@@ -6,19 +6,20 @@ import axios from 'axios'
 import { FormWrapper } from 'components/LoginLayout/FormWrapper'
 import { Button } from 'components/Button/Button'
 import { Input } from 'components/Input/Input'
+import { Errors } from 'components/Errors/Errors'
 
 import styles from './LoginPage.module.scss'
-
-const INITIAL_STATE = {
-  email: '',
-  password: '',
-}
 
 export class LoginPageView extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = { ...INITIAL_STATE }
+    this.state = {
+      email: '',
+      password: '',
+      loading: false,
+      errors: '',
+    }
   }
 
   handleChange = fildName => value => {
@@ -27,9 +28,33 @@ export class LoginPageView extends React.Component {
     })
   }
 
-  handleLogin = async () => {}
+  handleLogin = async () => {
+    const { email, password } = this.state
+
+    this.setState({
+      loading: true,
+    })
+
+    axios
+      .post('/login', { email, password })
+      .then(res => {
+        console.log(res.data)
+        this.setState({
+          loading: false,
+        })
+        this.props.history.push('/')
+      })
+      .catch(err => {
+        this.setState({
+          errors: err.response.data,
+          loading: false,
+        })
+      })
+  }
 
   render() {
+    const { errors, loading } = this.state
+
     return (
       <FormWrapper>
         <div className={styles.form}>
@@ -39,6 +64,7 @@ export class LoginPageView extends React.Component {
             handleChange={this.handleChange('email')}
             name="username"
           />
+          <Errors>{errors.email}</Errors>
           <Input
             value={this.state.password}
             placeholder="Password"
@@ -46,6 +72,8 @@ export class LoginPageView extends React.Component {
             name="password"
             type="password"
           />
+          <Errors>{errors.password}</Errors>
+          <Errors>{errors.general}</Errors>
           <Button handleClick={this.handleLogin}>Log in</Button>
           <div className={styles.separator}>
             <p>or</p>
