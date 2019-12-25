@@ -38,7 +38,9 @@ export class LoginPageView extends React.Component {
     axios
       .post('/login', { email, password })
       .then(res => {
+        // eslint-disable-next-line no-console
         console.log(res.data)
+        localStorage.setItem('FBIdToken', `Bearer ${res.data.token}`)
         this.setState({
           loading: false,
         })
@@ -74,7 +76,7 @@ export class LoginPageView extends React.Component {
           />
           <Errors>{errors.password}</Errors>
           <Errors>{errors.general}</Errors>
-          <Button handleClick={this.handleLogin}>Log in</Button>
+          <Button handleClick={this.handleLogin} isLoading={loading}>Log in</Button>
           <div className={styles.separator}>
             <p>or</p>
           </div>

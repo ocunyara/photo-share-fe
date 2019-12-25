@@ -6,21 +6,23 @@ import PropTypes from 'prop-types'
 import { FormWrapper } from 'components/LoginLayout/FormWrapper'
 import { Button } from 'components/Button/Button'
 import { Input } from 'components/Input/Input'
+import { Errors } from 'components/Errors/Errors'
 
 import styles from './RegisterPage.module.scss'
-
-const INITIAL_STATE = {
-  name: '',
-  email: '',
-  password: '',
-  fullName: '',
-}
+import axios from 'axios'
 
 export class RegisterPage extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = { ...INITIAL_STATE }
+    this.state = {
+      handle: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      loading: false,
+      errors: '',
+    }
   }
 
   handleChange = fildName => value => {
@@ -30,21 +32,44 @@ export class RegisterPage extends React.Component {
   }
 
   handleSign = async () => {
-    const { name, email, password, fullName } = this.state
+    const { email, password, confirmPassword, handle } = this.state
+
+    this.setState({
+      loading: true,
+    })
+
+    axios
+      .post('/signup', { email, password, confirmPassword, handle })
+      .then(res => {
+        // eslint-disable-next-line no-console
+        console.log(res.data)
+        localStorage.setItem('FBIdToken', `Bearer ${res.data.token}`)
+        this.setState({
+          loading: false,
+        })
+        this.props.history.push('/')
+      })
+      .catch(err => {
+        this.setState({
+          errors: err.response.data,
+          loading: false,
+        })
+      })
   }
 
   render() {
+    const { errors, loading } = this.state
+
     return (
       <FormWrapper>
         <div className={styles.form}>
           <Input
-            value={this.state.fullName}
+            value={this.state.handle}
             placeholder="Full Name"
-            handleChange={this.handleChange('fullName')}
-            name="fullName"
+            handleChange={this.handleChange('handle')}
+            name="handle"
           />
           <Input value={this.state.email} placeholder="Email" handleChange={this.handleChange('email')} name="email" />
-          <Input value={this.state.name} placeholder="name" handleChange={this.handleChange('name')} name="name" />
           <Input
             value={this.state.password}
             placeholder="Password"
@@ -52,7 +77,18 @@ export class RegisterPage extends React.Component {
             name="password"
             type="password"
           />
-          <Button handleClick={this.handleSign}>Sing us</Button>
+          <Input
+            value={this.state.confirmPassword}
+            placeholder="confirmPassword"
+            handleChange={this.handleChange('confirmPassword')}
+            name="confirmPassword"
+            type="password"
+          />
+          <Errors>{errors.password}</Errors>
+          <Errors>{errors.general}</Errors>
+          <Button handleClick={this.handleSign} isLoading={loading}>
+            Sing us
+          </Button>
         </div>
         <div className={styles.bottomField}>
           <p>
