@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Link, withRouter } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 import { FormWrapper } from 'components/LoginLayout/FormWrapper'
@@ -8,18 +8,33 @@ import { Button } from 'components/Button/Button'
 import { Input } from 'components/Input/Input'
 import { Errors } from 'components/Errors/Errors'
 
+// Redux stuff
+import { connect } from 'react-redux'
+import { loginUser } from '../../redux/actions/userActions'
+
 import styles from './LoginPage.module.scss'
 
-export class LoginPageView extends React.Component {
-  constructor(props) {
-    super(props)
-
+class LoginPage extends Component {
+  constructor() {
+    super()
     this.state = {
       email: '',
       password: '',
-      loading: false,
-      errors: '',
+      errors: {},
     }
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.UI.errors) {
+      this.setState({ errors: nextProps.UI.errors })
+    }
+  }
+  handleLogin = () => {
+    const userData = {
+      email: this.state.email,
+      password: this.state.password,
+    }
+
+    this.props.loginUser(userData, this.props.history)
   }
 
   handleChange = fildName => value => {
@@ -28,34 +43,11 @@ export class LoginPageView extends React.Component {
     })
   }
 
-  handleLogin = async () => {
-    const { email, password } = this.state
-
-    this.setState({
-      loading: true,
-    })
-
-    axios
-      .post('/login', { email, password })
-      .then(res => {
-        // eslint-disable-next-line no-console
-        console.log(res.data)
-        localStorage.setItem('FBIdToken', `Bearer ${res.data.token}`)
-        this.setState({
-          loading: false,
-        })
-        this.props.history.push('/')
-      })
-      .catch(err => {
-        this.setState({
-          errors: err.response.data,
-          loading: false,
-        })
-      })
-  }
-
   render() {
-    const { errors, loading } = this.state
+    const {
+      UI: { loading },
+    } = this.props
+    const { errors } = this.state
 
     return (
       <FormWrapper>
@@ -76,7 +68,9 @@ export class LoginPageView extends React.Component {
           />
           <Errors>{errors.password}</Errors>
           <Errors>{errors.general}</Errors>
-          <Button handleClick={this.handleLogin} isLoading={loading}>Log in</Button>
+          <Button handleClick={this.handleLogin} isLoading={loading}>
+            Log in
+          </Button>
           <div className={styles.separator}>
             <p>or</p>
           </div>
@@ -94,10 +88,22 @@ export class LoginPageView extends React.Component {
   }
 }
 
-LoginPageView.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
+LoginPage.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  UI: PropTypes.object.isRequired,
 }
 
-export default withRouter(LoginPageView)
+const mapStateToProps = state => ({
+  user: state.user,
+  UI: state.UI,
+})
+
+const mapActionsToProps = {
+  loginUser,
+}
+
+export default connect(
+  mapStateToProps,
+  mapActionsToProps,
+)(LoginPage)

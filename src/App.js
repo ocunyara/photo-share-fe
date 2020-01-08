@@ -3,17 +3,23 @@ import { Route, Switch, Redirect, BrowserRouter } from 'react-router-dom'
 import { CssBaseline } from '@material-ui/core'
 import jwtDwcode from 'jwt-decode'
 
+// Redux
+import { Provider } from 'react-redux'
+import store from 'redux/store'
+
+// Pages
 import HomePage from 'pages/HomePage/HomePage'
 import { RegisterPage } from 'pages/RegisterPage/RegisterPage'
-import { LoginPageView } from 'pages/LoginPage/LoginPage'
+import LoginPage from 'pages/LoginPage/LoginPage'
 import { ResetPage } from 'pages/ResetPage/ResetPage'
 import { Dashboard } from 'pages/Dashboard/Dashboard'
 import { NotFound } from 'pages/404Page/NotFound'
 
+// Styles
 import './App.module.scss'
 import './styles/app.general.scss'
 
-let authenticated;
+let authenticated
 
 const token = localStorage.FBIdToken
 
@@ -47,7 +53,7 @@ const isAuthenticated = () => (
 const renderGuestRoutes = () => (
   <Switch>
     <Route path="/register" component={RegisterPage} />
-    <Route path="/login" component={LoginPageView} />
+    <Route path="/login" component={LoginPage} />
     <Route path="/reset" component={ResetPage} />
     {commonPages()}
   </Switch>
@@ -58,8 +64,10 @@ export default function App() {
     <Fragment>
       <CssBaseline />
       <BrowserRouter>
-        {authenticated && isAuthenticated()}
-        {!authenticated && renderGuestRoutes()}
+        <Provider store={store}>
+          {authenticated && isAuthenticated()}
+          {!authenticated && renderGuestRoutes()}
+        </Provider>
       </BrowserRouter>
     </Fragment>
   )
