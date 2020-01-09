@@ -1,6 +1,5 @@
-import React from 'react'
-import { Link, withRouter } from 'react-router-dom'
-
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import { FormWrapper } from 'components/LoginLayout/FormWrapper'
@@ -9,19 +8,27 @@ import { Input } from 'components/Input/Input'
 import { Errors } from 'components/Errors/Errors'
 
 import styles from './RegisterPage.module.scss'
-import axios from 'axios'
 
-export class RegisterPage extends React.Component {
-  constructor(props) {
-    super(props)
+// Redux stuff
+import { connect } from 'react-redux'
+import { signupUser } from '../../redux/actions/userActions'
+
+class RegisterPage extends Component {
+  constructor() {
+    super()
 
     this.state = {
       handle: '',
       email: '',
       password: '',
       confirmPassword: '',
-      loading: false,
-      errors: '',
+      errors: {},
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.UI.errors) {
+      this.setState({ errors: nextProps.UI.errors })
     }
   }
 
@@ -31,34 +38,22 @@ export class RegisterPage extends React.Component {
     })
   }
 
-  handleSign = async () => {
-    const { email, password, confirmPassword, handle } = this.state
+  handleSign = () => {
+    const newUserData = {
+      email: this.state.email,
+      password: this.state.password,
+      confirmPassword: this.state.password,
+      handle: this.state.password,
+    }
 
-    this.setState({
-      loading: true,
-    })
-
-    axios
-      .post('/signup', { email, password, confirmPassword, handle })
-      .then(res => {
-        // eslint-disable-next-line no-console
-        console.log(res.data)
-        localStorage.setItem('FBIdToken', `Bearer ${res.data.token}`)
-        this.setState({
-          loading: false,
-        })
-        this.props.history.push('/')
-      })
-      .catch(err => {
-        this.setState({
-          errors: err.response.data,
-          loading: false,
-        })
-      })
+    this.props.signupUser(newUserData, this.props.history)
   }
 
   render() {
-    const { errors, loading } = this.state
+    const {
+      UI: { loading },
+    } = this.props
+    const { errors } = this.state
 
     return (
       <FormWrapper>
@@ -101,9 +96,17 @@ export class RegisterPage extends React.Component {
 }
 
 RegisterPage.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
+  signupUser: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  UI: PropTypes.object.isRequired,
 }
 
-export default withRouter(RegisterPage)
+const mapStateToProps = state => ({
+  user: state.user,
+  UI: state.UI,
+})
+
+export default connect(
+  mapStateToProps,
+  { signupUser },
+)(RegisterPage)

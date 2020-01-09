@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
 
 import { FormWrapper } from 'components/LoginLayout/FormWrapper'
 import { Button } from 'components/Button/Button'
@@ -17,6 +16,7 @@ import styles from './LoginPage.module.scss'
 class LoginPage extends Component {
   constructor() {
     super()
+
     this.state = {
       email: '',
       password: '',

@@ -1,5 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
-import VideogameAssetIcon from '@material-ui/icons/VideogameAsset'
+import React, { Fragment } from 'react'
 
 import { PageHeader } from 'components/PageHeader/PageHeader'
 import MailOutlineIcon from '@material-ui/icons/MailOutline'

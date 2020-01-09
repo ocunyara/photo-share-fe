@@ -8,7 +8,7 @@ import store from 'redux/store'
 
 // Pages
 import HomePage from 'pages/HomePage/HomePage'
-import { RegisterPage } from 'pages/RegisterPage/RegisterPage'
+import RegisterPage from 'pages/RegisterPage/RegisterPage'
 import LoginPage from 'pages/LoginPage/LoginPage'
 import { ResetPage } from 'pages/ResetPage/ResetPage'
 import { Dashboard } from 'pages/Dashboard/Dashboard'

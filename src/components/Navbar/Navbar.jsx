@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import styles from './Navbar.module.scss'
 
@@ -17,18 +17,18 @@ export const NavBar = props => {
     </ul>
   )
 
-  const renderUserLinks = () => (
-    <ul>
-      <li>
-        <Link to="/dashboard" className={styles.line}>
-          Dashboard
-        </Link>
-      </li>
-      <li>
-        <Link to="/">Logout</Link>
-      </li>
-    </ul>
-  )
+  // const renderUserLinks = () => (
+  //   <ul>
+  //     <li>
+  //       <Link to="/dashboard" className={styles.line}>
+  //         Dashboard
+  //       </Link>
+  //     </li>
+  //     <li>
+  //       <Link to="/">Logout</Link>
+  //     </li>
+  //   </ul>
+  // )
 
   return <nav className={styles.nav}>{renderGuestLinks()}</nav>
 }
