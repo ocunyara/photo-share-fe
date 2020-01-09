@@ -1,6 +1,5 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { Route, Switch, Redirect, BrowserRouter } from 'react-router-dom'
-import { CssBaseline } from '@material-ui/core'
 import jwtDwcode from 'jwt-decode'
 
 // Redux
@@ -61,14 +60,11 @@ const renderGuestRoutes = () => (
 
 export default function App() {
   return (
-    <Fragment>
-      <CssBaseline />
-      <BrowserRouter>
-        <Provider store={store}>
-          {authenticated && isAuthenticated()}
-          {!authenticated && renderGuestRoutes()}
-        </Provider>
-      </BrowserRouter>
-    </Fragment>
+    <BrowserRouter>
+      <Provider store={store}>
+        {authenticated && isAuthenticated()}
+        {!authenticated && renderGuestRoutes()}
+      </Provider>
+    </BrowserRouter>
   )
 }
