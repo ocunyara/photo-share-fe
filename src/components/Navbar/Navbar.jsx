@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import styles from './Navbar.module.scss'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import store from '../../redux/store'
+import { logoutUser } from '../../redux/actions/userActions'
 
 const NavBar = ({ authenticated }) => {
   const renderGuestLinks = () => (
@@ -27,7 +29,9 @@ const NavBar = ({ authenticated }) => {
         </Link>
       </li>
       <li>
-        <Link to="/">Logout</Link>
+        <Link onClick={() => store.dispatch(logoutUser())} to="/">
+          Logout
+        </Link>
       </li>
     </ul>
   )
