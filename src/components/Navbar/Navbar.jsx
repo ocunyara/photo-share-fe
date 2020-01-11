@@ -2,8 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import styles from './Navbar.module.scss'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
-export const NavBar = props => {
+const NavBar = ({ authenticated }) => {
   const renderGuestLinks = () => (
     <ul>
       <li>
@@ -17,18 +19,28 @@ export const NavBar = props => {
     </ul>
   )
 
-  // const renderUserLinks = () => (
-  //   <ul>
-  //     <li>
-  //       <Link to="/dashboard" className={styles.line}>
-  //         Dashboard
-  //       </Link>
-  //     </li>
-  //     <li>
-  //       <Link to="/">Logout</Link>
-  //     </li>
-  //   </ul>
-  // )
+  const renderUserLinks = () => (
+    <ul>
+      <li>
+        <Link to="/dashboard" className={styles.line}>
+          Dashboard
+        </Link>
+      </li>
+      <li>
+        <Link to="/">Logout</Link>
+      </li>
+    </ul>
+  )
 
-  return <nav className={styles.nav}>{renderGuestLinks()}</nav>
+  return <nav className={styles.nav}>{authenticated ? renderUserLinks() : renderGuestLinks()}</nav>
 }
+
+const mapStateToProps = state => ({
+  authenticated: state.user.authenticated,
+})
+
+NavBar.propTypes = {
+  user: PropTypes.object,
+}
+
+export default connect(mapStateToProps)(NavBar)
