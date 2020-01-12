@@ -2,12 +2,15 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import dayjs from 'dayjs'
 
+import EditDetails from 'components/EditDetails/EditDetails'
 import { PageHeader } from 'components/PageHeader/PageHeader'
 
 import MailOutlineIcon from '@material-ui/icons/MailOutline'
 import MoodIcon from '@material-ui/icons/Mood'
 import EditIcon from '@material-ui/icons/Edit'
 import Tooltip from '@material-ui/core/Tooltip'
+import RoomIcon from '@material-ui/icons/Room'
+import WebIcon from '@material-ui/icons/Web'
 
 import { connect } from 'react-redux'
 import { uploadImage } from '../../redux/actions/userActions'
@@ -32,7 +35,7 @@ class Dashboard extends Component {
   render() {
     const {
       user: {
-        credentials: { handle, createAt, imageUrl, bio, email },
+        credentials: { handle, createAt, imageUrl, bio, email, location, website },
         loading,
         authenticated,
       },
@@ -59,13 +62,20 @@ class Dashboard extends Component {
                 <span className={styles.name}>{handle}</span>
                 <span>Joined {dayjs(createAt).format('MMM YYYY')}</span>
               </div>
-              <div className={styles.profile_editable}>
-                <button>Edit profile</button>
-                <a href="mailto:" className={styles.email}>
-                  <MailOutlineIcon className={styles.email_icon} />
-                  {email}
-                </a>
-              </div>
+              <EditDetails />
+              <p>
+                <RoomIcon />
+                {location}
+              </p>
+              <a href="mailto:" className={styles.email}>
+                <MailOutlineIcon className={styles.email_icon} />
+                {email}
+              </a>
+              {/* eslint-disable-next-line react/no-string-refs,react/jsx-no-target-blank */}
+              <a href={website} target="_blank" ref="noopener">
+                <WebIcon />
+                {website}
+              </a>
             </div>
             <div className={styles.user_portfolio}></div>
           </div>
