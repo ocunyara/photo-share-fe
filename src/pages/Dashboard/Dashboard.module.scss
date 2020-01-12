@@ -6,7 +6,7 @@
 }
 
 .user_profile {
-  width: 200px;
+  width: 280px;
   margin-right: 15px;
 }
 
@@ -14,25 +14,41 @@
   width: 100%;
 }
 
-.avatar {
+.set_status {
   margin-bottom: 20px;
+  border: 1px solid #e1e4e8;
+  border-radius: 0 0 3px 3px;
+  border-top: 0;
+  padding: 8px;
+  color: #586069;
+  font-size: 12px;
+
+  .smile_icon {
+    width: 20px;
+    margin-right: 10px;
+  }
+}
+
+.avatar {
+  border: 1px solid #e1e4e8;
+  border-radius: 3px 3px 0 0;
 }
 
 .card_name {
   margin-bottom: 20px;
+
   .name {
     font-size: 26px;
     line-height: 30px;
     font-weight: 600;
     display: block;
-    margin-bottom: 5px;
   }
+}
 
-  .full_name {
-    font-size: 20px;
-    line-height: 24px;
-    color: #666;
-  }
+.website {
+  display: block;
+  color: #0366d6;
+  margin-top: 5px;
 }
 
 .profile_editable {

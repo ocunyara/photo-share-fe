@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 import HomePage from './pages/HomePage/HomePage'
 import { NotFound } from './pages/404Page/NotFound'
-import { Dashboard } from './pages/Dashboard/Dashboard'
+import Dashboard from './pages/Dashboard/Dashboard'
 import RegisterPage from './pages/RegisterPage/RegisterPage'
 import LoginPage from './pages/LoginPage/LoginPage'
 import { ResetPage } from './pages/ResetPage/ResetPage'
@@ -14,8 +14,7 @@ const commonPages = () => (
   <Switch>
     <Route path="/" component={HomePage} exact />
     <Route path="/users/" />
-    <Route path="/404" component={NotFound} />
-    <Redirect from="*" to="/404" />
+    <Route component={NotFound} />
   </Switch>
 )
 
