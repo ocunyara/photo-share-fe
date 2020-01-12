@@ -16,6 +16,7 @@ export class PostList extends Component {
         })
       })
       .catch(err => {
+        // eslint-disable-next-line no-console,no-undef
         console.log(err)
       })
   }

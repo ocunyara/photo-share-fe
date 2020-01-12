@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
@@ -34,6 +34,7 @@ const renderGuestRoutes = () => (
   </Switch>
 )
 
+// eslint-disable-next-line react/prop-types
 const PageRouter = ({ authenticated }) => (
   <Fragment>
     {authenticated && isAuthenticated()}

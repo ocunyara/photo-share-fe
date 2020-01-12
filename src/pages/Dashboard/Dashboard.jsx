@@ -3,14 +3,32 @@ import PropTypes from 'prop-types'
 import dayjs from 'dayjs'
 
 import { PageHeader } from 'components/PageHeader/PageHeader'
+
 import MailOutlineIcon from '@material-ui/icons/MailOutline'
 import MoodIcon from '@material-ui/icons/Mood'
+import EditIcon from '@material-ui/icons/Edit'
+import Tooltip from '@material-ui/core/Tooltip'
 
 import { connect } from 'react-redux'
+import { uploadImage } from '../../redux/actions/userActions'
 
 import styles from './Dashboard.module.scss'
 
 class Dashboard extends Component {
+  handleImageChange = event => {
+    const image = event.target.files[0]
+    const formData = new FormData()
+
+    formData.append('image', image, image.name)
+    this.props.uploadImage(formData)
+  }
+
+  handleEditPicture = () => {
+    const fileInput = document.getElementById('imageInput')
+
+    fileInput.click()
+  }
+
   render() {
     const {
       user: {
@@ -28,6 +46,10 @@ class Dashboard extends Component {
             <div className={styles.user_profile}>
               <div className={styles.avatar}>
                 <img src={imageUrl} alt="Avatar" />
+                <input type="file" id="imageInput" onChange={this.handleImageChange} />
+                <Tooltip title="Edit profile picture" placement="top">
+                  <EditIcon onClick={this.handleEditPicture} className={styles.avatar_edit} />
+                </Tooltip>
               </div>
               <div className={styles.set_status}>
                 <MoodIcon className={styles.smile_icon} />
@@ -63,11 +85,15 @@ class Dashboard extends Component {
 }
 
 Dashboard.propTypes = {
-  user: PropTypes.object,
+  user: PropTypes.object.isRequired,
+  uploadImage: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
   user: state.user,
 })
 
-export default connect(mapStateToProps)(Dashboard)
+export default connect(
+  mapStateToProps,
+  { uploadImage },
+)(Dashboard)

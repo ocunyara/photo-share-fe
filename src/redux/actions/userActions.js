@@ -10,7 +10,7 @@ export const loginUser = (userData, history) => dispatch => {
 
       dispatch(getUserData())
       dispatch({ type: CLEAR_ERRORS })
-      history.push('/')
+      history.push('/Dashboard')
     })
     .catch(err => {
       dispatch({
@@ -40,6 +40,7 @@ export const signupUser = (newUserData, history) => dispatch => {
 }
 
 export const logoutUser = () => dispatch => {
+  // eslint-disable-next-line no-undef
   localStorage.removeItem('FBIdToken')
   delete axios.defaults.headers.common['Authorization']
   dispatch({ type: SET_UNAUTHENTICATED })
@@ -55,12 +56,25 @@ export const getUserData = () => dispatch => {
         payload: res.data,
       })
     })
+    // eslint-disable-next-line no-console,no-undef
+    .catch(err => console.log(err))
+}
+
+export const uploadImage = formData => dispatch => {
+  dispatch({ type: LOADING_USER })
+  axios
+    .post('/user/image', formData)
+    .then(() => {
+      dispatch(getUserData())
+    })
+    // eslint-disable-next-line no-console,no-undef
     .catch(err => console.log(err))
 }
 
 const setAuthorizationHeader = token => {
   const FBIdToken = `Bearer ${token}`
 
+  // eslint-disable-next-line no-undef
   localStorage.setItem('FBIdToken', FBIdToken)
   axios.defaults.headers.common['Authorization'] = FBIdToken
 }

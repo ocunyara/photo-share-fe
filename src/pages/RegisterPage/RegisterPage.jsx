@@ -26,6 +26,7 @@ class RegisterPage extends Component {
     }
   }
 
+  // eslint-disable-next-line react/no-deprecated
   componentWillReceiveProps(nextProps) {
     if (nextProps.UI.errors) {
       this.setState({ errors: nextProps.UI.errors })
@@ -46,6 +47,7 @@ class RegisterPage extends Component {
       handle: this.state.password,
     }
 
+    // eslint-disable-next-line react/prop-types
     this.props.signupUser(newUserData, this.props.history)
   }
 

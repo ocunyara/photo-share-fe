@@ -16,6 +16,7 @@ import { loginUser, getUserData } from './redux/actions/userActions'
 import './App.module.scss'
 import './styles/app.general.scss'
 
+// eslint-disable-next-line no-undef
 const token = localStorage.FBIdToken
 
 if (token) {

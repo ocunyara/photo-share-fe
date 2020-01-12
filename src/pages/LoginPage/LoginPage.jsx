@@ -23,6 +23,7 @@ class LoginPage extends Component {
       errors: {},
     }
   }
+  // eslint-disable-next-line react/no-deprecated
   componentWillReceiveProps(nextProps) {
     if (nextProps.UI.errors) {
       this.setState({ errors: nextProps.UI.errors })
@@ -34,6 +35,7 @@ class LoginPage extends Component {
       password: this.state.password,
     }
 
+    // eslint-disable-next-line react/prop-types
     this.props.loginUser(userData, this.props.history)
   }
 

@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import store from '../../redux/store'
 import { logoutUser } from '../../redux/actions/userActions'
 
+// eslint-disable-next-line react/prop-types
 const NavBar = ({ authenticated }) => {
   const renderGuestLinks = () => (
     <ul>
