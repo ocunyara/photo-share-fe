@@ -14,25 +14,11 @@
   width: 100%;
 }
 
-.set_status {
-  margin-bottom: 20px;
-  border: 1px solid #e1e4e8;
-  border-radius: 0 0 3px 3px;
-  border-top: 0;
-  padding: 8px;
-  color: #586069;
-  font-size: 13px;
-
-  .smile_icon {
-    width: 20px;
-    margin-right: 10px;
-  }
-}
-
 .avatar {
   border: 1px solid #e1e4e8;
   border-radius: 3px 3px 0 0;
   position: relative;
+  margin-bottom: 20px;
 
   input {
     display: none;
@@ -69,16 +55,4 @@
   display: block;
   color: #0366d6;
   margin-top: 5px;
-}
-
-.email {
-  color: #0366d6;
-  display: block;
-  text-decoration: none;
-
-  &_icon {
-    margin-right: 10px;
-    width: 18px;
-    color: #6a737d;
-  }
 }

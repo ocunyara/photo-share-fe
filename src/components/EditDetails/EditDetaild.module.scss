@@ -3,9 +3,9 @@
     width: 100%;
     padding: 6px 1px;
     display: block;
-    font-size: 14px;
-    margin-bottom: 20px;
+    height: 34px;
     line-height: 20px;
+    font-size: 14px;
     font-weight: 600;
     color: #24292e;
     border: 1px solid rgba(27, 31, 35, 0.2);
@@ -14,4 +14,65 @@
     background-image: linear-gradient(-180deg, #fafbfc, #eff3f6 90%);
     text-align: center;
   }
+}
+
+.local_info {
+  button {
+    margin-bottom: 20px;
+  }
+}
+
+.format_info {
+  input {
+    margin-bottom: 10px;
+    height: 30px;
+  }
+
+  button {
+    width: auto;
+    font-size: 12px;
+    height: 30px;
+    padding: 0 10px;
+    float: left;
+
+    &:first-of-type {
+      color: #fff;
+      background-color: #28a745;
+      background-image: linear-gradient(-180deg, #34d058, #28a745 90%);
+      margin-right: 15px;
+    }
+
+    &:last-of-type {
+      background-color: #e6ebf1;
+      background-image: linear-gradient(-180deg, #f0f3f6, #e6ebf1 90%);
+      background-position: -0.5em;
+      border-color: rgba(27, 31, 35, 0.35);
+    }
+  }
+}
+
+.location,
+.website,
+.email {
+  color: #0366d6;
+  display: block;
+  text-decoration: none;
+  line-height: 24px;
+  font-size: 14px;
+  margin-top: 0;
+  margin-bottom: 4px;
+
+  &_icon {
+    margin-right: 10px;
+    color: #6a737d;
+    font-size: 20px !important;
+  }
+}
+
+.location {
+  color: #24292e;
+}
+
+.bio {
+  margin-bottom: 10px;
 }

@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import styles from './Input.module.scss'
+import styles from './Textarea.module.scss'
 
-export const Input = ({ value, handleChange, placeholder, type = 'text' }) => (
-  <input
-    className={styles.input}
+export const Textarea = ({ value, handleChange, placeholder, type = 'text' }) => (
+  <textarea
+    className={styles.textarea}
     value={value}
     type={type}
     placeholder={placeholder}
@@ -13,7 +13,7 @@ export const Input = ({ value, handleChange, placeholder, type = 'text' }) => (
   />
 )
 
-Input.propTypes = {
+Textarea.propTypes = {
   value: PropTypes.string,
   placeholder: PropTypes.string,
   handleChange: PropTypes.func.isRequired,

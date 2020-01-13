@@ -5,12 +5,8 @@ import dayjs from 'dayjs'
 import EditDetails from 'components/EditDetails/EditDetails'
 import { PageHeader } from 'components/PageHeader/PageHeader'
 
-import MailOutlineIcon from '@material-ui/icons/MailOutline'
-import MoodIcon from '@material-ui/icons/Mood'
 import EditIcon from '@material-ui/icons/Edit'
 import Tooltip from '@material-ui/core/Tooltip'
-import RoomIcon from '@material-ui/icons/Room'
-import WebIcon from '@material-ui/icons/Web'
 
 import { connect } from 'react-redux'
 import { uploadImage } from '../../redux/actions/userActions'
@@ -35,57 +31,32 @@ class Dashboard extends Component {
   render() {
     const {
       user: {
-        credentials: { handle, createAt, imageUrl, bio, email, location, website },
+        credentials: { handle, createAt, imageUrl },
         loading,
-        authenticated,
       },
     } = this.props
 
     let profileMarkup = !loading ? (
-      authenticated ? (
-        <Fragment>
-          <PageHeader></PageHeader>
-          <div className={styles.container}>
-            <div className={styles.user_profile}>
-              <div className={styles.avatar}>
-                <img src={imageUrl} alt="Avatar" />
-                <input type="file" id="imageInput" onChange={this.handleImageChange} />
-                <Tooltip title="Edit profile picture" placement="top">
-                  <EditIcon onClick={this.handleEditPicture} className={styles.avatar_edit} />
-                </Tooltip>
-              </div>
-              <div className={styles.set_status}>
-                <MoodIcon className={styles.smile_icon} />
-                {bio}
-              </div>
-              <div className={styles.card_name}>
-                <span className={styles.name}>{handle}</span>
-                <span>Joined {dayjs(createAt).format('MMM YYYY')}</span>
-              </div>
-              <EditDetails />
-              <p>
-                <RoomIcon />
-                {location}
-              </p>
-              <a href="mailto:" className={styles.email}>
-                <MailOutlineIcon className={styles.email_icon} />
-                {email}
-              </a>
-              {/* eslint-disable-next-line react/no-string-refs,react/jsx-no-target-blank */}
-              <a href={website} target="_blank" ref="noopener">
-                <WebIcon />
-                {website}
-              </a>
+      <Fragment>
+        <PageHeader></PageHeader>
+        <div className={styles.container}>
+          <div className={styles.user_profile}>
+            <div className={styles.avatar}>
+              <img src={imageUrl} alt="Avatar" />
+              <input type="file" id="imageInput" onChange={this.handleImageChange} />
+              <Tooltip title="Edit profile picture" placement="top">
+                <EditIcon onClick={this.handleEditPicture} className={styles.avatar_edit} />
+              </Tooltip>
             </div>
-            <div className={styles.user_portfolio}></div>
+            <div className={styles.card_name}>
+              <span className={styles.name}>{handle}</span>
+              <span>Joined {dayjs(createAt).format('MMM YYYY')}</span>
+            </div>
+            <EditDetails />
           </div>
-        </Fragment>
-      ) : (
-        <Fragment>
-          <PageHeader></PageHeader>
-          <div className={styles.container}>No profile found, please login again</div>
-        </Fragment>
-      )
+          <div className={styles.user_portfolio}></div>
+        </div>
+      </Fragment>
     ) : (
       <p>loading...</p>
     )
