@@ -35,15 +35,13 @@ const renderGuestRoutes = () => (
 )
 
 // eslint-disable-next-line react/prop-types
-const PageRouter = ({ authenticated }) => (
-  <Fragment>
-    {authenticated && isAuthenticated()}
-    {!authenticated && renderGuestRoutes()}
-  </Fragment>
+const PageRouter = ({ loading, authenticated }) => (
+  <Fragment>{!loading ? (authenticated ? isAuthenticated() : renderGuestRoutes()) : 'loading...'}</Fragment>
 )
 
 const mapStateToProps = state => ({
   authenticated: state.user.authenticated,
+  loading: state.user.loading,
 })
 
 PageRouter.propTypes = {
