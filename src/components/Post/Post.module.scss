@@ -3,13 +3,11 @@
   width: 614px;
   border: solid 1px #e6e6e6;
   border-radius: 3px;
-  min-height: 400px; // todo: remove after Post will be done
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-
-.postFooter {
-  padding: 0 16px;
-}
-
 .postHeader {
   display: flex;
   align-items: center;
@@ -36,6 +34,7 @@
   color: #262626;
   font-weight: 600;
   font-family: Arial, sans-serif;
+  margin-right: 10px;
 }
 
 .locationLink {
@@ -51,4 +50,67 @@
   font-size: 10px;
   letter-spacing: 0.2px;
   text-transform: uppercase;
+}
+
+.like_count {
+  margin-left: 10px;
+}
+
+.post {
+  &_btn {
+    margin-right: 10px;
+    float: left;
+    cursor: pointer;
+
+    path {
+      color: #262626;
+    }
+
+    &:hover {
+      path {
+        color: #ed4956;
+      }
+    }
+  }
+
+  &_text {
+    margin: 6px 0;
+    display: inline-block;
+    width: 100%;
+  }
+
+  &_footer {
+    padding: 0 16px;
+  }
+
+  &_comment {
+    border-top: 1px solid #efefef;
+    padding: 10px 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    textarea {
+      border: 0;
+      resize: inherit;
+      height: 20px;
+      padding: 0;
+      margin-bottom: 0;
+    }
+
+    button {
+      background: transparent;
+      color: #3897f0;
+      display: inline-block;
+      width: 175px;
+    }
+  }
+
+  &_link {
+    color: #ed4956;
+
+    path {
+      color: #ed4956;
+    }
+  }
 }
