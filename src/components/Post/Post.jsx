@@ -17,6 +17,14 @@ import { likeScream, unlikeScream } from '../../redux/actions/dataActions'
 import { connect } from 'react-redux'
 
 class Post extends Component {
+  constructor() {
+    super()
+
+    this.state = {
+      screamBody: '',
+    }
+  }
+
   likedScream = () => {
     if (this.props.user.likes && this.props.user.likes.find(like => like.screamId === this.props.scream.screamId))
       return true
@@ -29,6 +37,17 @@ class Post extends Component {
 
   unlikeScream = () => {
     this.props.unlikeScream(this.props.scream.screamId)
+  }
+
+  handleChange = fildName => value => {
+    this.setState({
+      [fildName]: value,
+    })
+    console.log(this.state.screamBody)
+  }
+
+  handleSubmit = () => {
+    console.log(this.state.screamBody)
   }
 
   render() {
@@ -73,8 +92,13 @@ class Post extends Component {
           </div>
           <p className={styles.time}>{dayjs(createAt).fromNow()}</p>
           <div className={styles.post_comment}>
-            <Textarea placeholder="Добавьте комментарий..."></Textarea>
-            <Button>Опубликовать</Button>
+            <Textarea
+              placeholder="Добавьте комментарий..."
+              value={this.state.screamBody}
+              handleChange={this.handleChange('screamBody')}></Textarea>
+            <Button handleClick={this.handleSubmit} disabled={this.state.screamBody ? '' : 'disabled'}>
+              Опубликовать
+            </Button>
           </div>
         </div>
       </div>
@@ -87,6 +111,7 @@ Post.propTypes = {
   unlikeScream: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
   scream: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
