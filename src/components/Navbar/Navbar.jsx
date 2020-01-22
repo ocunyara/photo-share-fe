@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import styles from './Navbar.module.scss'
+
 import { connect } from 'react-redux'
 import store from '../../redux/store'
 import { logoutUser } from '../../redux/actions/userActions'
@@ -44,7 +45,6 @@ const mapStateToProps = state => ({
 })
 
 NavBar.propTypes = {
-  user: PropTypes.object.isRequired,
   authenticated: PropTypes.bool.isRequired,
 }
 

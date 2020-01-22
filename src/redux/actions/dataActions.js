@@ -1,4 +1,4 @@
-import { SET_SCREAMS, LOADING_DATA, LIKE_SCREAM, UNLIKE_SCREAM } from '../types'
+import { SET_SCREAMS, LOADING_DATA, LIKE_SCREAM, UNLIKE_SCREAM, DELETE_SCREAM } from '../types'
 import axios from 'axios'
 
 // Get all screams
@@ -31,6 +31,7 @@ export const likeScream = screamId => dispatch => {
         payload: res.data,
       })
     })
+    // eslint-disable-next-line no-undef,no-console
     .catch(err => console.log(err))
 }
 
@@ -45,5 +46,21 @@ export const unlikeScream = screamId => dispatch => {
         payload: res.data,
       })
     })
+    // eslint-disable-next-line no-undef,no-console
+    .catch(err => console.log(err))
+}
+
+// Delete scream
+
+export const deleteScream = screamId => dispatch => {
+  axios
+    .delete(`scream/${screamId}`)
+    .then(() => {
+      dispatch({
+        type: DELETE_SCREAM,
+        payload: screamId,
+      })
+    })
+    // eslint-disable-next-line no-undef,no-console
     .catch(err => console.log(err))
 }

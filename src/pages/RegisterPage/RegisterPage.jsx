@@ -42,9 +42,9 @@ class RegisterPage extends Component {
   handleSign = () => {
     const newUserData = {
       email: this.state.email,
+      handle: this.state.handle,
       password: this.state.password,
       confirmPassword: this.state.password,
-      handle: this.state.password,
     }
 
     // eslint-disable-next-line react/prop-types
@@ -62,7 +62,7 @@ class RegisterPage extends Component {
         <div className={styles.form}>
           <Input
             value={this.state.handle}
-            placeholder="Full Name"
+            placeholder="Name"
             handleChange={this.handleChange('handle')}
             name="handle"
           />
@@ -81,7 +81,10 @@ class RegisterPage extends Component {
             name="confirmPassword"
             type="password"
           />
+          <Errors>{errors.email}</Errors>
           <Errors>{errors.password}</Errors>
+          <Errors>{errors.handle}</Errors>
+          <Errors>{errors.confirmPassword}</Errors>
           <Errors>{errors.general}</Errors>
           <Button handleClick={this.handleSign} isLoading={loading}>
             Sing us

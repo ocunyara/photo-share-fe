@@ -55,6 +55,7 @@
 
 .like_count {
   margin-left: 10px;
+  margin-right: auto;
 }
 
 .post {
@@ -109,7 +110,13 @@
 
   &_link {
     color: #ed4956;
-    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    svg {
+      cursor: pointer;
+    }
 
     path {
       color: #ed4956;

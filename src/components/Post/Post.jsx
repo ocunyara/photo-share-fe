@@ -8,10 +8,10 @@ import styles from './Post.module.scss'
 
 import { Button } from '../Button/Button'
 import { Textarea } from '../Textarea/Textarea'
+import DeleteButton from '../DeleteButton/DeleteButton'
 
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
 import FavoriteIcon from '@material-ui/icons/Favorite'
-import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline'
 
 import { likeScream, unlikeScream } from '../../redux/actions/dataActions'
 import { connect } from 'react-redux'
@@ -54,8 +54,11 @@ class Post extends Component {
     dayjs.extend(relativeTime)
 
     const {
-      scream: { createAt, body, userImage, userHandle, userName, screamId, likeCount, commentCount },
-      user: { authenticated },
+      scream: { createAt, body, userImage, userHandle, userName, screamId, likeCount },
+      user: {
+        authenticated,
+        credentials: { handle },
+      },
     } = this.props
 
     const likeButton = !authenticated ? (
@@ -67,6 +70,8 @@ class Post extends Component {
     ) : (
       <FavoriteBorderIcon color="primary" onClick={this.likeScream} />
     )
+
+    const deleteButton = authenticated && userHandle === handle ? <DeleteButton screamId={screamId} /> : null
 
     return (
       <div id={screamId} className={styles.wrapper}>
@@ -83,6 +88,7 @@ class Post extends Component {
           <div className={styles.post_link}>
             {likeButton}
             <span className={styles.like_count}>{likeCount} Likes</span>
+            {deleteButton}
           </div>
           <div className={styles.post_text}>
             <Link className={styles.profileLink} to={`/users/${userHandle}`}>
