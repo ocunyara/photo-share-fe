@@ -2,8 +2,9 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import dayjs from 'dayjs'
 
-import EditDetails from 'components/EditDetails/EditDetails'
-import { PageHeader } from 'components/PageHeader/PageHeader'
+import EditDetails from '../../components/EditDetails/EditDetails'
+import { PageHeader } from '../../components/PageHeader/PageHeader'
+import PostScream from '../../components/PostScream/PostScream'
 
 import EditIcon from '@material-ui/icons/Edit'
 import Tooltip from '@material-ui/core/Tooltip'
@@ -54,7 +55,9 @@ class Dashboard extends Component {
             </div>
             <EditDetails />
           </div>
-          <div className={styles.user_portfolio}></div>
+          <div className={styles.user_portfolio}>
+            <PostScream></PostScream>
+          </div>
         </div>
       </Fragment>
     ) : (

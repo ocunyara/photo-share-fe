@@ -54,7 +54,7 @@ class Post extends Component {
     dayjs.extend(relativeTime)
 
     const {
-      scream: { createAt, body, userImage, userHandle, userName, screamId, likeCount },
+      scream: { createAt, body, userImage, userHandle, userName, screamId, likeCount, screamImg },
       user: {
         authenticated,
         credentials: { handle },
@@ -82,7 +82,7 @@ class Post extends Component {
           </Link>
         </div>
         <div className={styles.post_body}>
-          {/*<img src={screamImg} alt={userName} className={styles.postImage} />*/}
+          <img src={screamImg} alt={userName} className={styles.postImage} />
         </div>
         <div className={styles.post_footer}>
           <div className={styles.post_link}>
@@ -114,8 +114,6 @@ class Post extends Component {
 
 Post.propTypes = {
   likeScream: PropTypes.func.isRequired,
-  unlikeScream: PropTypes.func.isRequired,
-  data: PropTypes.object.isRequired,
   scream: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
 }

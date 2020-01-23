@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
-import { FormWrapper } from 'components/LoginLayout/FormWrapper'
-import { Button } from 'components/Button/Button'
-import { Input } from 'components/Input/Input'
-import { Errors } from 'components/Errors/Errors'
+import { FormWrapper } from '../../components/LoginLayout/FormWrapper'
+import { Button } from '../../components/Button/Button'
+import { Input } from '../../components/Input/Input'
+import { Errors } from '../../components/Errors/Errors'
 
 // Redux stuff
 import { connect } from 'react-redux'
