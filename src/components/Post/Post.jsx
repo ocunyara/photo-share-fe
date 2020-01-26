@@ -9,11 +9,7 @@ import styles from './Post.module.scss'
 import { Button } from '../Button/Button'
 import { Textarea } from '../Textarea/Textarea'
 import DeleteButton from '../DeleteButton/DeleteButton'
-
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
-import FavoriteIcon from '@material-ui/icons/Favorite'
-
-import { likeScream, unlikeScream } from '../../redux/actions/dataActions'
+import LikeButton from '../LikeButton/LikeButton'
 import { connect } from 'react-redux'
 
 class Post extends Component {
@@ -23,20 +19,6 @@ class Post extends Component {
     this.state = {
       screamBody: '',
     }
-  }
-
-  likedScream = () => {
-    if (this.props.user.likes && this.props.user.likes.find(like => like.screamId === this.props.scream.screamId))
-      return true
-    else return false
-  }
-
-  likeScream = () => {
-    this.props.likeScream(this.props.scream.screamId)
-  }
-
-  unlikeScream = () => {
-    this.props.unlikeScream(this.props.scream.screamId)
   }
 
   handleChange = fildName => value => {
@@ -54,22 +36,12 @@ class Post extends Component {
     dayjs.extend(relativeTime)
 
     const {
-      scream: { createAt, body, userImage, userHandle, userName, screamId, likeCount, screamImg },
+      scream: { createAt, body, userImage, userHandle, userName, screamId, screamImg, likeCount },
       user: {
         authenticated,
         credentials: { handle },
       },
     } = this.props
-
-    const likeButton = !authenticated ? (
-      <Link to="/login">
-        <FavoriteBorderIcon />
-      </Link>
-    ) : this.likedScream() ? (
-      <FavoriteIcon color="primary" onClick={this.unlikeScream} />
-    ) : (
-      <FavoriteBorderIcon color="primary" onClick={this.likeScream} />
-    )
 
     const deleteButton = authenticated && userHandle === handle ? <DeleteButton screamId={screamId} /> : null
 
@@ -86,7 +58,7 @@ class Post extends Component {
         </div>
         <div className={styles.post_footer}>
           <div className={styles.post_link}>
-            {likeButton}
+            <LikeButton screamId={screamId} />
             <span className={styles.like_count}>{likeCount} Likes</span>
             {deleteButton}
           </div>
@@ -113,7 +85,6 @@ class Post extends Component {
 }
 
 Post.propTypes = {
-  likeScream: PropTypes.func.isRequired,
   scream: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
 }
@@ -122,10 +93,7 @@ const mapStateToProps = state => ({
   user: state.user,
 })
 
-const mapActionsToProps = {
-  likeScream,
-  unlikeScream,
-}
+const mapActionsToProps = {}
 
 export default connect(
   mapStateToProps,
