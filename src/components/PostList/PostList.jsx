@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import Post from 'components/Post/Post'
+import Post from '../../components/Post/Post'
 
 import { connect } from 'react-redux'
 import { getScreams } from '../../redux/actions/dataActions'

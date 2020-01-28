@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
-import { likeScream, unlikeScream } from '../../redux/actions/dataActions'
+import { likeScream, unlikeScream } from '../../../redux/actions/dataActions'
 import { connect } from 'react-redux'
 
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
