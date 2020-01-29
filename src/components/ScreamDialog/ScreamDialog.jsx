@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 
-import LikeButton from '../Post/LikeButton/LikeButton'
 import dayjs from 'dayjs'
 import { Link } from 'react-router-dom'
 // MUI Stuff
@@ -12,14 +11,12 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 // Icons
 import CloseIcon from '@material-ui/icons/Close'
-import UnfoldMore from '@material-ui/icons/UnfoldMore'
 import ChatIcon from '@material-ui/icons/Chat'
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline'
-
 import styles from './ScreamDialog.module.scss'
 
-import { Button } from '../Button/Button'
-import { Textarea } from '../Textarea/Textarea'
+import Comments from '../Post/Comments/Comments'
+import LikeButton from '../Post/LikeButton/LikeButton'
 
 import { connect } from 'react-redux'
 import { getScream } from '../../redux/actions/dataActions'
@@ -40,7 +37,6 @@ class ScreamDialog extends Component {
   }
 
   handleClose = () => {
-    window.history.pushState(null, null, this.state.oldPath)
     this.setState({ open: false })
   }
 
@@ -71,6 +67,7 @@ class ScreamDialog extends Component {
           <span>{likeCount} likes</span>
           <ChatIcon color="primary" />
           <span>{commentCount} comments</span>
+          <Comments comments={comments}></Comments>
         </Grid>
       </Grid>
     )
