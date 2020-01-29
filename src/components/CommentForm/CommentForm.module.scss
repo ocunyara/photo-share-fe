@@ -1,0 +1,22 @@
+post_comment {
+  border-top: 1px solid #efefef;
+  padding: 10px 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  textarea {
+    border: 0;
+    resize: inherit;
+    height: 20px;
+    padding: 0;
+    margin-bottom: 0;
+  }
+
+  button {
+    background: transparent;
+    color: #3897f0;
+    display: inline-block;
+    width: 175px;
+  }
+}

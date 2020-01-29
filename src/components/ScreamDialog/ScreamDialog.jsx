@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-
 import dayjs from 'dayjs'
 import { Link } from 'react-router-dom'
 // MUI Stuff
@@ -9,17 +8,18 @@ import DialogContent from '@material-ui/core/DialogContent'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
-// Icons
 import CloseIcon from '@material-ui/icons/Close'
 import ChatIcon from '@material-ui/icons/Chat'
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline'
+
 import styles from './ScreamDialog.module.scss'
 
 import Comments from '../Post/Comments/Comments'
 import LikeButton from '../Post/LikeButton/LikeButton'
+import CommentForm from '../CommentForm/CommentForm'
 
 import { connect } from 'react-redux'
-import { getScream } from '../../redux/actions/dataActions'
+import { getScream, clearErrors } from '../../redux/actions/dataActions'
 
 class ScreamDialog extends Component {
   state = {
@@ -38,11 +38,12 @@ class ScreamDialog extends Component {
 
   handleClose = () => {
     this.setState({ open: false })
+    this.props.clearErrors()
   }
 
   render() {
     const {
-      scream: { screamId, body, createdAt, likeCount, commentCount, userImage, userHandle, comments },
+      scream: { screamId, body, createAt, likeCount, commentCount, userImage, userHandle, comments },
       UI: { loading },
     } = this.props
 
@@ -51,7 +52,7 @@ class ScreamDialog extends Component {
         <CircularProgress size={200} thickness={2} />
       </div>
     ) : (
-      <Grid container spacing={16}>
+      <Grid container>
         <Grid item sm={2}>
           <img src={userImage} alt="Profile" className={styles.profileImage} />
         </Grid>
@@ -60,14 +61,15 @@ class ScreamDialog extends Component {
             @{userHandle}
           </Typography>
           <Typography variant="body2" color="textSecondary">
-            {dayjs(createdAt).format('h:mm a, MMMM DD YYYY')}
+            {dayjs(createAt).format('h:mm a, MMMM DD YYYY')}
           </Typography>
           <Typography variant="body1">{body}</Typography>
           <LikeButton screamId={screamId} />
           <span>{likeCount} likes</span>
           <ChatIcon color="primary" />
           <span>{commentCount} comments</span>
-          <Comments comments={comments}></Comments>
+          <CommentForm screamId={screamId} />
+          <Comments comments={comments} />
         </Grid>
       </Grid>
     )
@@ -86,6 +88,7 @@ class ScreamDialog extends Component {
 
 ScreamDialog.propTypes = {
   getScream: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
   screamId: PropTypes.string.isRequired,
   userHandle: PropTypes.string.isRequired,
   scream: PropTypes.object.isRequired,
@@ -97,7 +100,12 @@ const mapStateToProps = state => ({
   UI: state.UI,
 })
 
+const mapActionsToProps = {
+  getScream,
+  clearErrors,
+}
+
 export default connect(
   mapStateToProps,
-  { getScream },
+  mapActionsToProps,
 )(ScreamDialog)

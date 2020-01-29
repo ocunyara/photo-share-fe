@@ -30,7 +30,7 @@ class DeleteButton extends Component {
   render() {
     return (
       <div className={styles.delete_scream}>
-        <DeleteOutline handleClick={this.handleOpen} />
+        <DeleteOutline onClick={this.handleOpen} />
         <Dialog open={this.state.open} onClose={this.handleClose} fullWidth maxWidth="sm">
           <DialogTitle>Are you sure you want to delete this scream</DialogTitle>
           <DialogActions>
