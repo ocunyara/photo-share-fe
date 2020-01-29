@@ -27,8 +27,6 @@ import { getScream } from '../../redux/actions/dataActions'
 class ScreamDialog extends Component {
   state = {
     open: false,
-    oldPath: '',
-    newPath: '',
   }
   componentDidMount() {
     if (this.props.openDialog) {
@@ -37,16 +35,7 @@ class ScreamDialog extends Component {
   }
 
   handleOpen = () => {
-    let oldPath = window.location.pathname
-
-    const { userHandle, screamId } = this.props
-    const newPath = `/users/${userHandle}/scream/${screamId}`
-
-    if (oldPath === newPath) oldPath = `/users/${userHandle}`
-
-    window.history.pushState(null, null, newPath)
-
-    this.setState({ open: true, oldPath, newPath })
+    this.setState({ open: true })
     this.props.getScream(this.props.screamId)
   }
 
@@ -89,7 +78,7 @@ class ScreamDialog extends Component {
     return (
       <Fragment>
         <ChatBubbleOutlineIcon className={styles.comment} onClick={this.handleOpen} />
-        <Dialog open={this.state.open} onClick={this.handleClose} fullWidth maxWidth="sm">
+        <Dialog open={this.state.open} fullWidth maxWidth="sm">
           <CloseIcon className={styles.close} onClick={this.handleClose} />
           <DialogContent>{dialogMarkup}</DialogContent>
         </Dialog>
