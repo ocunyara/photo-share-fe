@@ -6,7 +6,6 @@ import axios from 'axios'
 // Pages
 import PageRoute from 'PageRouter'
 
-// Redux
 import { Provider } from 'react-redux'
 import store from 'redux/store'
 import { SET_UNAUTHENTICATED } from './redux/types'
